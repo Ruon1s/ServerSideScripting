@@ -1,8 +1,18 @@
 'use strict';
+require('dotenv').config();
 const express = require('express');
 const app = express();
+const db = require('./database/db');
 const cors = require('cors');
 const port = 3000;
+
+db.on('connected', () => {
+    app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+    console.log('wee');
+}
+);
+
+
 const passport = require('./utils/pass');
 const authRoute = require('./routes/authRoute');
 const catRoute = require('./routes/catRoute');
@@ -16,4 +26,4 @@ app.use('/user',passport.authenticate('jwt', {session: false}), userRoute);
 
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+
